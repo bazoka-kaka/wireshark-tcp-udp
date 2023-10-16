@@ -136,17 +136,68 @@
 
 7. What is the length (header plus payload) of each of the first four data-carrying
    TCP segments?
+
+   <img src="assets/tcp_7.png" />
+
+   from there, we can see that each has the length of 1466
+
 8. What is the minimum amount of available buffer space advertised to the client by
    gaia.cs.umass.edu among these first four data-carrying TCP segments? Does the
    lack of receiver buffer space ever throttle the sender for these first four data carrying segments?
+
+   <img src="assets/tcp_8_1.png" />
+
+   The minimum amount of available buffer space advertised to the client among these first four data-carrying TCP segments is <code>66304 bytes</code>.
+
+   The lack of receiver buffer space can throttle the sender in a TCP (Transmission Control Protocol) connection. as the sender will respect the receiver's advertised window size to maintain the flow of data at a rate that the receiver can handle. This mechanism helps maintain network efficiency and reliability.
+
 9. Are there any retransmitted segments in the trace file? What did you check for (in
    the trace) in order to answer this question?
+
+   Yes, there is
+
+   <img src="assets/tcp_9_1.png" />
+
+   what I checked is the sequence number and the "retransmission" flag.
+
 10. How much data does the receiver typically acknowledge in an ACK among the
     first ten data-carrying segments sent from the client to gaia.cs.umass.edu? Can
     you identify cases where the receiver is ACKing every other received segment
     (see Table 3.2 in the text) among these first ten data-carrying segments?
+
+      <img src="assets/tcp_10.png" />
+
+    We can find the typically acknowledged datas by subtracting the next sequence number with the acknowledgement number, here we have:
+
+    1413 - 1 = 1412 bytes total data by subtracting the two
+
 11. What is the throughput (bytes transferred per unit time) for the TCP connection?
     Explain how you calculated this value.
+
+    we'll need to monitor the data transfer and measure the time it takes for a certain amount of data to be transmitted. Here's how:
+
+    a. Select a Period of Time
+
+    <img src="assets/tcp_11.png" />
+
+    b. Record the start time when the data transfer begins.
+
+    from the above image, the start time is 13.1321 s
+
+    c. Record the end time when the data transfer completes.
+
+    from the above image, the end time is 13.1456 s
+
+    d. Determine the total number of bytes transferred during the data transfer
+
+    66 + 66 + 54 = 186 bytes
+
+    e. Calculate Throughput:
+
+    Throughput (bytes per unit time) = (Total Data Transferred) / (End Time - Start Time)
+
+    Throughput = 186 / (13.1456 - 13.1321) = 186 / 1.017 = 182.89 bytes per second
+
 12. Use the Time-Sequence-Graph(Stevens) plotting tool to view the sequence
     number versus time plot of segments being sent from the client to the
     gaia.cs.umass.edu server. Consider the “fleets” of packets sent around t = 0.025, t = 0.053, t = 0.082 and t = 0.1. Comment on whether this looks as if TCP is in its slow start phase, congestion avoidance phase or some other phase. Figure 6 shows a slightly different view of this data.
