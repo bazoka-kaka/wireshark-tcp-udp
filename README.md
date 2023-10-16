@@ -154,3 +154,107 @@
     about the period?
 14. Answer each of two questions above for the trace that you have gathered when
     you transferred a file from your computer to gaia.cs.umass.edu
+
+## Wireshark UDP
+
+### Capture UDP packet
+
+Here, we just download the captured datas from http://gaia.cs.umass.edu/wireshark-labs/wireshark-traces-8.1.zip
+
+### Questions and answers
+
+1. Select the first UDP segment in your trace. What is the packet number of this
+   segment in the trace file? What type of application-layer payload or protocol
+   message is being carried in this UDP segment? Look at the details of this packet
+   in Wireshark. How many fields there are in the UDP header? (You shouldn’t
+   look in the textbook! Answer these questions directly from what you observe in
+   the packet trace.) What are the names of these fields?
+
+   a. Select the first UDP segment in your trace
+
+   First, we just display filter <code>udp</code> in our display filter query form
+
+   <img src="assets/udp_1.png" />
+
+   Here, the highlighted packet is the first UDP segment
+
+   <img src="assets/udp_1_1.png" />
+
+   b. What is the packet number of this segment in the trace file?
+
+   <img src="assets/udp_1_2.png" />
+
+   packet number is 470
+
+   c. What type of application-layer payload or protocol message is being carried in this UDP segment?
+
+   <img src="assets/udp_1_3.png" />
+
+   the payload type is DNS payload and the content is gaia.cs.umass.edu
+
+   d. Look at the details of this packet in Wireshark. How many fields there are in the UDP header?
+
+   <img src="assets/udp_1_4.png" />
+
+   There are 4 fields:
+
+   - source port
+   - destination port
+   - length
+   - checksum
+
+2. By consulting the displayed information in Wireshark’s packet content field for
+   this packet (or by consulting the textbook), what is the length (in bytes) of each of the UDP header fields?
+
+   <img src="assets/udp_2.png" />
+
+   The length is 43 - 35 (because 35 is size of the payload), meaning the header's size is 8 bytes
+
+3. The value in the Length field is the length of what? (You can consult the text for
+   this answer). Verify your claim with your captured UDP packet.
+
+   The length of UDP header including the payload (from pic number 2)
+
+4. What is the maximum number of bytes that can be included in a UDP payload?
+   (Hint: the answer to this question can be determined by your answer to 2. above)
+
+   The maximum size of a User Datagram Protocol (UDP) payload can vary depending on the specific network and system configurations. However, the theoretical maximum size of a UDP packet, including its payload and header, is 65,535 bytes
+
+5. What is the largest possible source port number? (Hint: see the hint in 4.)
+
+   The largest possible source port number in a UDP packet is 65,535. This is because the source port field in the UDP header is a 16-bit field, which means it can represent values from 0 to 65,535.
+
+6. What is the protocol number for UDP? Give your answer in decimal notation. To
+   answer this question, you’ll need to look into the Protocol field of the IP datagram containing this UDP segment (see Figure 4.13 in the text, and the discussion of IP header fields).
+
+   <img src="assets/udp_6.png" />
+
+   The protocol number for UDP (User Datagram Protocol) in decimal notation is 17.
+
+7. Examine the pair of UDP packets in which your host sends the first UDP packet
+   and the second UDP packet is a reply to this first UDP packet. (Hint: for a second
+   packet to be sent in response to a first packet, the sender of the first packet should be the destination of the second packet). What is the packet number of the first of these two UDP segments in the trace file? What is the packet number
+   of the second of these two UDP segments in the trace file? Describe the relationship between the port numbers in the two packets.
+
+   a. Examine the pair of UDP packets in which your host sends the first UDP packet
+   and the second UDP packet is a reply to this first UDP packet.
+
+   <img src="assets/udp_7_1.png" />
+
+   The packet is a pair because the destination and source IP matches between the 2 packets
+
+   b. What is the packet number of the first of these two UDP segments in the trace file? What is the packet number of the second of these two UDP segments in the trace file?
+
+   <img src="assets/udp_7_2.png" />
+
+   packet number of the first one is 470 while the second one is 472
+
+   c. Describe the relationship between the port numbers in the two packets.
+
+   <img src="assets/udp_7_3.png" />
+
+   When the first packet sends the data, the data is sent using port 1051 while the second packet receives the data using port 53 (DNS port), meaning the first packet is asking for DNS port to the second packet
+
+   <img src="assets/udp_7_4.png" />
+
+   in the second packet, the source the server that serves DNS sends the result on port 53 and the client requesting, receives the packet on port 1051
